@@ -16,7 +16,7 @@ module.exports = (query) => {
             class: ""
         }
     ];
-
+//
     if (query.status) {
         const index = filterStatus.findIndex(item => item.status == query.status); //tìm phần tử có chỉ số thỏa mãn điều kiện
         filterStatus[index].class = "active";
