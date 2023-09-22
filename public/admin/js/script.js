@@ -1,7 +1,7 @@
 //Button STATUS
 const buttonStatus = document.querySelectorAll("[button-status]") //thuộc tính tự định nghĩa phải đmở đóng ngoặc vuông
 
-if(buttonStatus.length > 0) {
+if (buttonStatus.length > 0) {
 
     let url = new URL(window.location.href); // lấy ra url, URL là hàm tự định nghĩa trong js
 
@@ -9,7 +9,7 @@ if(buttonStatus.length > 0) {
         button.addEventListener("click", () => {
             const status = button.getAttribute("button-status");
 
-            if(status){
+            if (status) {
                 // những cái sau dấu ? là phần search của url
                 url.searchParams.set("status", status) // nó đã đổi xong url
             } else {
@@ -22,26 +22,26 @@ if(buttonStatus.length > 0) {
 //End ButtonStatus
 //Form Search
 const formSearch = document.querySelector("#form-search");
-if(formSearch){
+if (formSearch) {
     let url = new URL(window.location.href);
 
     formSearch.addEventListener("submit", (e) => {
         e.preventDefault();
         const keyword = e.target.elements.keyword.value;
-        if(keyword){
+        if (keyword) {
             // những cái sau dấu ? là phần search của url
             url.searchParams.set("keyword", keyword) // nó đã đổi xong url
         } else {
             url.searchParams.delete("keyword");
         }
         window.location.href = url.href;
-        
+
     });
 }
 //End Form Search
 //Pagination
 const buttonsPagination = document.querySelectorAll("[button-pagination]") // thuoc tinh tu dinh nghia phai them ngoac vuong
-if(buttonsPagination){
+if (buttonsPagination) {
     let url = new URL(window.location.href);
     buttonsPagination.forEach(button => {
         button.addEventListener("click", () => {
@@ -56,16 +56,16 @@ if(buttonsPagination){
 
 //CheckBOx Multi
 const checkboxMulti = document.querySelector("[checkbox-multi]");
-if(checkboxMulti){
+if (checkboxMulti) {
     const inputCheckAll = checkboxMulti.querySelector("input[name='checkall']"); // lấy ra ô có input checkall
-    const inputsId = checkboxMulti.querySelectorAll("input[name='id']");   
+    const inputsId = checkboxMulti.querySelectorAll("input[name='id']");
 
     inputCheckAll.addEventListener("click", () => {
-        if(inputCheckAll.checked){
+        if (inputCheckAll.checked) {
             inputsId.forEach(input => {
                 input.checked = true;
             });
-        } else{
+        } else {
             inputsId.forEach(input => {
                 input.checked = false;
             });
@@ -75,13 +75,13 @@ if(checkboxMulti){
         input.addEventListener("click", () => {
             const countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
 
-            if(countChecked == inputsId.length){
+            if (countChecked == inputsId.length) {
                 inputCheckAll.checked = true;
             }
-            else{
+            else {
                 inputCheckAll.checked = false;
             }
-            
+
         });
     });
 }
@@ -89,7 +89,7 @@ if(checkboxMulti){
 
 //Form change multi
 const formChangeMulti = document.querySelector("[form-change-multi]");
-if(formChangeMulti){
+if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (e) => {
         e.preventDefault(); // ngăn ngừa load lại trang
 
@@ -98,30 +98,30 @@ if(formChangeMulti){
 
         const typeChange = e.target.elements.type.value;
 
-        if(typeChange == "delete-all") {
+        if (typeChange == "delete-all") {
             const isConfirm = confirm("Bạn muốn xóa không?");
 
-            if(!isConfirm) {
+            if (!isConfirm) {
                 return;
             }
         }
 
 
-        if(inputChecked.length > 0){
-            let ids =[];
+        if (inputChecked.length > 0) {
+            let ids = [];
 
-            const inputIds = formChangeMulti.querySelector("input[name='ids']"); 
-            
+            const inputIds = formChangeMulti.querySelector("input[name='ids']");
+
             inputChecked.forEach(input => {
                 const id = input.value; // dùng getAttribute cũng được
 
 
 
-                if(typeChange == "change-position") {
-                    const position  = input.closest("tr").querySelector("input[name='position]").value; // lấy ra 3 ô input
+                if (typeChange == "change-position") {
+                    const position = input.closest("tr").querySelector("input[name='position]").value; // lấy ra 3 ô input
                     ids.push(`${id}-${position}`)
                 } else {
-                ids.push(id);
+                    ids.push(id);
                 }
             });
             // vì trong ô input chỉ lưu đc dạng text k lưu được dạng mảng nên cần dùng Join
@@ -138,7 +138,7 @@ if(formChangeMulti){
 
 //Show alert
 const showAlert = document.querySelector("[show-alert]");
-if(showAlert) {
+if (showAlert) {
     const time = parseInt(showAlert.getAttribute("data-time"));
     const closeAlert = showAlert.querySelector("[close-alert]");
     setTimeout(() => {
@@ -153,14 +153,54 @@ if(showAlert) {
 
 //Upload image
 const uploadImage = document.querySelector("[upload-image]");
-if(uploadImage) {
+if (uploadImage) {
     const uploadImageInput = document.querySelector("[upload-image-input]");
     const uploadImagePreview = document.querySelector("[upload-image-preview]");
     uploadImageInput.addEventListener("change", (e) => {
-         const file = e.target.files[0];
-         if(file) {
+        const file = e.target.files[0];
+        if (file) {
             uploadImagePreview.src = URL.createObjectURL(file);
-         }
+        }
     });
 }
 //End Upload Image
+
+//Sort
+
+const sort = document.querySelector("[sort]");
+if (sort) {
+
+    let url = new URL(window.location.href);
+
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClear = sort.querySelector("[sort-clear]");
+
+    sortSelect.addEventListener("change", (e) => {
+        const value = e.target.value;
+        const [sortKey, sortValue] = value.split("-");
+
+        url.searchParams.set("sortKey", sortKey);
+        url.searchParams.set("sortValue", sortValue);
+        window.location.href = url.href;
+    });
+    //Xoa sap xep
+    sortClear.addEventListener("click", () => {
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+
+        window.location.href = url.href;
+    });
+
+    //Them selected cho option
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+
+    if (sortKey && sortValue) {
+        const stringSort = `${sortKey}-${sortValue}`;
+        const optionSelected = sortSelect.querySelector(`option[value='${stringSort}']`);
+        optionSelected.selected = true;
+    }
+
+}
+
+//End Sort
