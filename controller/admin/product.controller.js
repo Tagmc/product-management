@@ -3,6 +3,10 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const { prefixAdmin } = require("../../config/system");
+
+const ProductCategory = require("../../models/products-category-models");
+
+const createTreeHelper = require("../../helpers/create-tree")
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
 
@@ -135,8 +139,18 @@ module.exports.deleteItem = async (req, res) => {
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
 
+    let find = {
+        deleted: false
+    };
+
+
+    const category = await ProductCategory.find(find);
+
+    const newCategory = createTreeHelper.tree(category);
+
     res.render("admin/pages/products/create", {
         pageTitle: "Thêm mới sản phẩm",
+        category: newCategory
 
     });
 }
@@ -174,9 +188,17 @@ module.exports.edit = async (req, res) => {
 
         const product = await Product.findOne(find);
 
+    
+        const category = await ProductCategory.find({
+            deleted: false
+        });
+    
+        const newCategory = createTreeHelper.tree(category);
+
         res.render("admin/pages/products/edit", {
             pageTitle: "Chỉnh sửa sản phẩm",
-            product: product
+            product: product,
+            category: newCategory
         });
     } catch (error) {
         res.redirect(`${prefixAdmin}/products`);
