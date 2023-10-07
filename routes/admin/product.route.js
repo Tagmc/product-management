@@ -9,7 +9,7 @@ const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 
 const upload = multer() //dest là đứng từ thư mục gốc 
 const controller = require("../../controller/admin/product.controller");
-const validate = require("../../validates/admin/products.validates")
+const validate = require("../../validates/admin/products.validates");
 router.get("/", controller.index);
 
 router.patch("/change-status/:status/:id", controller.changeStatus); // : la de truyen data dong
