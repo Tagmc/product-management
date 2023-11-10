@@ -8,7 +8,7 @@ const accountSchema = new mongoose.Schema(
         password: String, 
         token: {
             type: String,
-            default: generate.generateRandomString()
+            default: generate.generateRandomString(20)
         },
         phone: String,
         avatar: String,
@@ -16,7 +16,7 @@ const accountSchema = new mongoose.Schema(
         status: String,
         deleted: {
             type: Boolean,
-            default: false
+            default: false,
         },
         deleteAt: Date
     },

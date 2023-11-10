@@ -20,7 +20,7 @@ if (tablePermissions) {
                     });
                 })
             } else {
-                inputs.forEach(input => {
+                inputs.forEach((input, index) => {
                     const checked = input.checked;
                     if (checked) {
                         permissions[index].permissions.push(name);

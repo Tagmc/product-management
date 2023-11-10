@@ -89,7 +89,7 @@ module.exports.editPatch = async (req, res) => {
     const id = req.params.id;
 
     const emailExist = await Account.findOne({
-        _id: {$ne: id}, // not equal
+        _id: { $ne: id}, // not equal
         email: req.body.email,
         deleted: false
     });

@@ -1,6 +1,6 @@
 const ProductCategory = require("../../models/products-category-models");
 const { prefixAdmin } = require("../../config/system");
-const createTreeHelper = require("../../helpers/create-tree")
+const createTreeHelper = require("../../helpers/create-tree");
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
