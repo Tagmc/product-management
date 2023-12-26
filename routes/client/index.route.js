@@ -10,7 +10,8 @@ const userMiddleware = require("../../middlewares/client/user.middleware");
 const settingMiddleware = require("../../middlewares/client/setting.middleware");
 const chatRouter = require("../../routes/client/chat.route");
 const authMiddleware = require("../../middlewares/client/auth.middleware")
-const usersRouter = require("./users.route")
+const usersRouter = require("./users.route");
+const roomsChatRouter = require("./rooms-chat.route")
 module.exports = (app) => {
 
     app.use(categoryMiddleware.category);
@@ -25,5 +26,6 @@ module.exports = (app) => {
     app.use("/user", userRouter);
     app.use("/chat", authMiddleware.requireAuth, chatRouter);
     app.use("/users", authMiddleware.requireAuth, usersRouter);
+    app.use("/rooms-chat", authMiddleware.requireAuth, roomsChatRouter);
 }
 // bình thường là export nhưng trong expressjs dùng module.export
